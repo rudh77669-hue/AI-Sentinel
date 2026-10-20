@@ -1,0 +1,205 @@
+{
+  "project": "AI Sentinel",
+  "task": "Network Threat Detection & Classification",
+  "evaluation_method": "Stratified 80/20 train/test holdout across all 8 CIC-IDS2017 captures",
+  "train_rows": 48685,
+  "test_rows": 12172,
+  "feature_count": 78,
+  "features": [
+    "Destination Port",
+    "Flow Duration",
+    "Total Fwd Packets",
+    "Total Backward Packets",
+    "Total Length of Fwd Packets",
+    "Total Length of Bwd Packets",
+    "Fwd Packet Length Max",
+    "Fwd Packet Length Min",
+    "Fwd Packet Length Mean",
+    "Fwd Packet Length Std",
+    "Bwd Packet Length Max",
+    "Bwd Packet Length Min",
+    "Bwd Packet Length Mean",
+    "Bwd Packet Length Std",
+    "Flow Bytes/s",
+    "Flow Packets/s",
+    "Flow IAT Mean",
+    "Flow IAT Std",
+    "Flow IAT Max",
+    "Flow IAT Min",
+    "Fwd IAT Total",
+    "Fwd IAT Mean",
+    "Fwd IAT Std",
+    "Fwd IAT Max",
+    "Fwd IAT Min",
+    "Bwd IAT Total",
+    "Bwd IAT Mean",
+    "Bwd IAT Std",
+    "Bwd IAT Max",
+    "Bwd IAT Min",
+    "Fwd PSH Flags",
+    "Bwd PSH Flags",
+    "Fwd URG Flags",
+    "Bwd URG Flags",
+    "Fwd Header Length",
+    "Bwd Header Length",
+    "Fwd Packets/s",
+    "Bwd Packets/s",
+    "Min Packet Length",
+    "Max Packet Length",
+    "Packet Length Mean",
+    "Packet Length Std",
+    "Packet Length Variance",
+    "FIN Flag Count",
+    "SYN Flag Count",
+    "RST Flag Count",
+    "PSH Flag Count",
+    "ACK Flag Count",
+    "URG Flag Count",
+    "CWE Flag Count",
+    "ECE Flag Count",
+    "Down/Up Ratio",
+    "Average Packet Size",
+    "Avg Fwd Segment Size",
+    "Avg Bwd Segment Size",
+    "Fwd Header Length.1",
+    "Fwd Avg Bytes/Bulk",
+    "Fwd Avg Packets/Bulk",
+    "Fwd Avg Bulk Rate",
+    "Bwd Avg Bytes/Bulk",
+    "Bwd Avg Packets/Bulk",
+    "Bwd Avg Bulk Rate",
+    "Subflow Fwd Packets",
+    "Subflow Fwd Bytes",
+    "Subflow Bwd Packets",
+    "Subflow Bwd Bytes",
+    "Init_Win_bytes_forward",
+    "Init_Win_bytes_backward",
+    "act_data_pkt_fwd",
+    "min_seg_size_forward",
+    "Active Mean",
+    "Active Std",
+    "Active Max",
+    "Active Min",
+    "Idle Mean",
+    "Idle Std",
+    "Idle Max",
+    "Idle Min"
+  ],
+  "accuracy": 0.9966316135392704,
+  "attack_precision": 0.9958415408185599,
+  "attack_recall": 0.9951881014873141,
+  "attack_f1": 0.9955147139262662,
+  "confusion_matrix_labels": [
+    "BENIGN",
+    "ATTACK"
+  ],
+  "confusion_matrix": [
+    [
+      7581,
+      19
+    ],
+    [
+      22,
+      4550
+    ]
+  ],
+  "classification_report": {
+    "BENIGN": {
+      "precision": 0.9971064053663028,
+      "recall": 0.9975,
+      "f1-score": 0.9973031638492402,
+      "support": 7600.0
+    },
+    "ATTACK": {
+      "precision": 0.9958415408185599,
+      "recall": 0.9951881014873141,
+      "f1-score": 0.9955147139262662,
+      "support": 4572.0
+    },
+    "accuracy": 0.9966316135392704,
+    "macro avg": {
+      "precision": 0.9964739730924314,
+      "recall": 0.9963440507436571,
+      "f1-score": 0.9964089388877533,
+      "support": 12172.0
+    },
+    "weighted avg": {
+      "precision": 0.996631301791518,
+      "recall": 0.9966316135392704,
+      "f1-score": 0.9966313931420567,
+      "support": 12172.0
+    }
+  },
+  "attack_type_breakdown": {
+    "BENIGN": {
+      "total": 7600,
+      "false_positives": 19,
+      "false_positive_rate": 0.0025
+    },
+    "Bot": {
+      "total": 362,
+      "detected": 356,
+      "detection_rate": 0.9834254143646409
+    },
+    "DDoS": {
+      "total": 795,
+      "detected": 794,
+      "detection_rate": 0.9987421383647799
+    },
+    "DoS GoldenEye": {
+      "total": 381,
+      "detected": 380,
+      "detection_rate": 0.9973753280839895
+    },
+    "DoS Hulk": {
+      "total": 558,
+      "detected": 552,
+      "detection_rate": 0.989247311827957
+    },
+    "DoS Slowhttptest": {
+      "total": 20,
+      "detected": 20,
+      "detection_rate": 1.0
+    },
+    "DoS slowloris": {
+      "total": 91,
+      "detected": 91,
+      "detection_rate": 1.0
+    },
+    "FTP-Patator": {
+      "total": 287,
+      "detected": 287,
+      "detection_rate": 1.0
+    },
+    "Infiltration": {
+      "total": 8,
+      "detected": 5,
+      "detection_rate": 0.625
+    },
+    "PortScan": {
+      "total": 970,
+      "detected": 970,
+      "detection_rate": 1.0
+    },
+    "SSH-Patator": {
+      "total": 687,
+      "detected": 685,
+      "detection_rate": 0.9970887918486172
+    },
+    "Web Attack - Brute Force": {
+      "total": 281,
+      "detected": 279,
+      "detection_rate": 0.9928825622775801
+    },
+    "Web Attack - Sql Injection": {
+      "total": 5,
+      "detected": 5,
+      "detection_rate": 1.0
+    },
+    "Web Attack - XSS": {
+      "total": 127,
+      "detected": 126,
+      "detection_rate": 0.9921259842519685
+    }
+  }
+}

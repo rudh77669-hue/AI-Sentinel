@@ -1,0 +1,154 @@
+{
+  "project": "AI Sentinel",
+  "task": "Binary benign-versus-attack classification",
+  "evaluation_method": "Sampled Wednesday holdout; training uses only the other CSV files",
+  "training_files": [
+    "Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv",
+    "Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv",
+    "Friday-WorkingHours-Morning.pcap_ISCX.csv",
+    "Monday-WorkingHours.pcap_ISCX.csv",
+    "Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv",
+    "Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv",
+    "Tuesday-WorkingHours.pcap_ISCX.csv"
+  ],
+  "test_files": [
+    "Wednesday-workingHours.pcap_ISCX.csv"
+  ],
+  "note": "Metrics apply to sampled Wednesday records. They do not establish performance on every unseen attack or live network traffic.",
+  "train_rows": 60817,
+  "test_rows": 16000,
+  "feature_count": 78,
+  "features": [
+    "Destination Port",
+    "Flow Duration",
+    "Total Fwd Packets",
+    "Total Backward Packets",
+    "Total Length of Fwd Packets",
+    "Total Length of Bwd Packets",
+    "Fwd Packet Length Max",
+    "Fwd Packet Length Min",
+    "Fwd Packet Length Mean",
+    "Fwd Packet Length Std",
+    "Bwd Packet Length Max",
+    "Bwd Packet Length Min",
+    "Bwd Packet Length Mean",
+    "Bwd Packet Length Std",
+    "Flow Bytes/s",
+    "Flow Packets/s",
+    "Flow IAT Mean",
+    "Flow IAT Std",
+    "Flow IAT Max",
+    "Flow IAT Min",
+    "Fwd IAT Total",
+    "Fwd IAT Mean",
+    "Fwd IAT Std",
+    "Fwd IAT Max",
+    "Fwd IAT Min",
+    "Bwd IAT Total",
+    "Bwd IAT Mean",
+    "Bwd IAT Std",
+    "Bwd IAT Max",
+    "Bwd IAT Min",
+    "Fwd PSH Flags",
+    "Bwd PSH Flags",
+    "Fwd URG Flags",
+    "Bwd URG Flags",
+    "Fwd Header Length",
+    "Bwd Header Length",
+    "Fwd Packets/s",
+    "Bwd Packets/s",
+    "Min Packet Length",
+    "Max Packet Length",
+    "Packet Length Mean",
+    "Packet Length Std",
+    "Packet Length Variance",
+    "FIN Flag Count",
+    "SYN Flag Count",
+    "RST Flag Count",
+    "PSH Flag Count",
+    "ACK Flag Count",
+    "URG Flag Count",
+    "CWE Flag Count",
+    "ECE Flag Count",
+    "Down/Up Ratio",
+    "Average Packet Size",
+    "Avg Fwd Segment Size",
+    "Avg Bwd Segment Size",
+    "Fwd Header Length.1",
+    "Fwd Avg Bytes/Bulk",
+    "Fwd Avg Packets/Bulk",
+    "Fwd Avg Bulk Rate",
+    "Bwd Avg Bytes/Bulk",
+    "Bwd Avg Packets/Bulk",
+    "Bwd Avg Bulk Rate",
+    "Subflow Fwd Packets",
+    "Subflow Fwd Bytes",
+    "Subflow Bwd Packets",
+    "Subflow Bwd Bytes",
+    "Init_Win_bytes_forward",
+    "Init_Win_bytes_backward",
+    "act_data_pkt_fwd",
+    "min_seg_size_forward",
+    "Active Mean",
+    "Active Std",
+    "Active Max",
+    "Active Min",
+    "Idle Mean",
+    "Idle Std",
+    "Idle Max",
+    "Idle Min"
+  ],
+  "train_class_counts": {
+    "BENIGN": 41000,
+    "ATTACK": 19817
+  },
+  "test_class_counts": {
+    "BENIGN": 8000,
+    "ATTACK": 8000
+  },
+  "accuracy": 0.51875,
+  "attack_precision": 0.993421052631579,
+  "attack_recall": 0.03775,
+  "attack_f1": 0.07273603082851637,
+  "confusion_matrix_labels": [
+    "BENIGN",
+    "ATTACK"
+  ],
+  "confusion_matrix": [
+    [
+      7998,
+      2
+    ],
+    [
+      7698,
+      302
+    ]
+  ],
+  "classification_report": {
+    "BENIGN": {
+      "precision": 0.5095565749235474,
+      "recall": 0.99975,
+      "f1-score": 0.675050641458474,
+      "support": 8000.0
+    },
+    "ATTACK": {
+      "precision": 0.993421052631579,
+      "recall": 0.03775,
+      "f1-score": 0.07273603082851637,
+      "support": 8000.0
+    },
+    "accuracy": 0.51875,
+    "macro avg": {
+      "precision": 0.7514888137775633,
+      "recall": 0.51875,
+      "f1-score": 0.3738933361434952,
+      "support": 16000.0
+    },
+    "weighted avg": {
+      "precision": 0.7514888137775633,
+      "recall": 0.51875,
+      "f1-score": 0.37389333614349524,
+      "support": 16000.0
+    }
+  }
+}

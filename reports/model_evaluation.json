@@ -1,0 +1,52 @@
+{
+  "evaluation": "Wednesday held-out sample",
+  "samples": 20000,
+  "feature_count": 78,
+  "preprocessing": "saved training imputer applied",
+  "model_classes": [
+    "ATTACK",
+    "BENIGN"
+  ],
+  "accuracy": 0.99765,
+  "classification_report": {
+    "BENIGN": {
+      "precision": 0.9970038949365825,
+      "recall": 0.9983,
+      "f1-score": 0.99765152650777,
+      "support": 10000.0
+    },
+    "ATTACK": {
+      "precision": 0.9982977871232602,
+      "recall": 0.997,
+      "f1-score": 0.9976484715064792,
+      "support": 10000.0
+    },
+    "accuracy": 0.99765,
+    "macro avg": {
+      "precision": 0.9976508410299214,
+      "recall": 0.9976499999999999,
+      "f1-score": 0.9976499990071246,
+      "support": 20000.0
+    },
+    "weighted avg": {
+      "precision": 0.9976508410299213,
+      "recall": 0.99765,
+      "f1-score": 0.9976499990071246,
+      "support": 20000.0
+    }
+  },
+  "confusion_matrix_labels": [
+    "BENIGN",
+    "ATTACK"
+  ],
+  "confusion_matrix": [
+    [
+      9983,
+      17
+    ],
+    [
+      30,
+      9970
+    ]
+  ]
+}

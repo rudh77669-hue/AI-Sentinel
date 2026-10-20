@@ -1,0 +1,38 @@
+[
+  {
+    "model": "classifier.joblib",
+    "samples": 20000,
+    "accuracy": 0.5183,
+    "attack_precision": 0.9815789473684211,
+    "attack_recall": 0.0373,
+    "attack_f1": 0.07186897880539499,
+    "predicted_attack_count": 380
+  },
+  {
+    "model": "classifier_backup_20261019_214753.joblib",
+    "samples": 20000,
+    "accuracy": 0.5183,
+    "attack_precision": 0.9815789473684211,
+    "attack_recall": 0.0373,
+    "attack_f1": 0.07186897880539499,
+    "predicted_attack_count": 380
+  },
+  {
+    "model": "classifier_baseline.joblib",
+    "samples": 20000,
+    "accuracy": 0.5183,
+    "attack_precision": 0.9815789473684211,
+    "attack_recall": 0.0373,
+    "attack_f1": 0.07186897880539499,
+    "predicted_attack_count": 380
+  },
+  {
+    "model": "classifier_experiment.joblib",
+    "samples": 20000,
+    "accuracy": 0.5183,
+    "attack_precision": 0.9815789473684211,
+    "attack_recall": 0.0373,
+    "attack_f1": 0.07186897880539499,
+    "predicted_attack_count": 380
+  }
+]

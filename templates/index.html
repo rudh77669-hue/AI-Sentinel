@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Sentinel | Cybersecurity Threat Detection & Investigation</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: #090e17;
+            color: #e2e8f0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        header {
+            padding: 22px 5%;
+            background: #0f172a;
+            border-bottom: 1px solid #1e293b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .brand-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            font-size: 28px;
+        }
+
+        header h1 {
+            color: #38bdf8;
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            color: #94a3b8;
+            margin: 4px 0 0 0;
+            font-size: 13px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        main { padding: 26px 5%; max-width: 1400px; margin: 0 auto; }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            margin-top: 10px;
+        }
+
+        .section-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin: 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 16px;
+            margin-bottom: 26px;
+        }
+
+        .card {
+            background: #0f172a;
+            padding: 20px;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            transition: transform 0.15s ease, border-color 0.15s ease;
+        }
+
+        .card:hover {
+            border-color: #334155;
+            transform: translateY(-2px);
+        }
+
+        .card h3 {
+            font-size: 12px;
+            color: #94a3b8;
+            margin: 0 0 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .value { font-size: 26px; font-weight: 700; }
+        .blue { color: #38bdf8; }
+        .red { color: #f87171; }
+        .yellow { color: #fbbf24; }
+        .green { color: #4ade80; }
+        .purple { color: #c084fc; }
+
+        /* Simulation Sandbox */
+        .simulation-box {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 26px;
+        }
+
+        .sim-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .sim-header h3 {
+            margin: 0;
+            font-size: 15px;
+            color: #f8fafc;
+        }
+
+        .sim-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary { background: #0284c7; color: white; }
+        .btn-primary:hover { background: #0369a1; }
+
+        .btn-danger { background: #dc2626; color: white; }
+        .btn-danger:hover { background: #b91c1c; }
+
+        .btn-warning { background: #d97706; color: white; }
+        .btn-warning:hover { background: #b45309; }
+
+        .btn-secondary { background: #334155; color: #f8fafc; }
+        .btn-secondary:hover { background: #475569; }
+
+        .btn-success { background: #16a34a; color: white; }
+        .btn-success:hover { background: #15803d; }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #334155;
+            color: #94a3b8;
+        }
+        .btn-outline:hover {
+            border-color: #64748b;
+            color: #f8fafc;
+        }
+
+        .select-threat {
+            padding: 8px 12px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #f8fafc;
+            border-radius: 6px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        /* Toast / Notification Banner */
+        #toast {
+            display: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border-left: 4px solid;
+            animation: fadeIn 0.2s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .toast-success { background: #064e3b; border-color: #34d399; color: #a7f3d0; }
+        .toast-alert { background: #450a0a; border-color: #f87171; color: #fecaca; }
+
+        /* Table Section */
+        .section {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+            padding: 22px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13.5px;
+        }
+
+        th, td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        th {
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            background: #0c1322;
+        }
+
+        tr:hover td {
+            background: rgba(30, 41, 59, 0.4);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-critical { background: #7f1d1d; color: #fca5a5; }
+        .badge-high { background: #7c2d12; color: #fdba74; }
+        .badge-medium { background: #713f12; color: #fde047; }
+        .badge-low { background: #1e3a8a; color: #93c5fd; }
+
+        .badge-status-new { background: #78350f; color: #fef08a; }
+        .badge-status-investigating { background: #1e3a8a; color: #bfdbfe; }
+        .badge-status-resolved { background: #064e3b; color: #86efac; }
+
+        .muted { color: #64748b; }
+        .code { font-family: monospace; font-size: 12.5px; color: #cbd5e1; }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(2px);
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+
+        .modal {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 24px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal h3 {
+            margin: 0 0 16px 0;
+            color: #f8fafc;
+            font-size: 17px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12.5px;
+            color: #94a3b8;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: white;
+            border-radius: 6px;
+            font-size: 13.5px;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: #0284c7;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="brand-title">
+        <span class="brand-icon">🛡️</span>
+        <div>
+            <h1>AI Sentinel</h1>
+            <p>AI-Powered Cybersecurity Threat Detection & Investigation Platform</p>
+        </div>
+    </div>
+    <div class="header-actions">
+        <button class="btn btn-outline" onclick="loadDashboard()">🔄 Refresh</button>
+        <button class="btn btn-danger" onclick="clearAlerts()">🗑️ Clear Alerts</button>
+    </div>
+</header>
+
+<main>
+    <!-- Notification Toast -->
+    <div id="toast"></div>
+
+    <div class="section-header">
+        <h2>Security Operations Overview</h2>
+        <span class="muted" style="font-size: 13px;" id="last-updated">Updating...</span>
+    </div>
+
+    <!-- Metric Cards -->
+    <div class="grid">
+        <div class="card">
+            <h3>System Status</h3>
+            <div class="value green" id="app-status">Checking...</div>
+        </div>
+
+        <div class="card">
+            <h3>Detection Engine</h3>
+            <div class="value green" id="model-status">Loaded</div>
+        </div>
+
+        <div class="card">
+            <h3>Model Accuracy</h3>
+            <div class="value blue">99.70%</div>
+        </div>
+
+        <div class="card">
+            <h3>Total Threats</h3>
+            <div class="value blue" id="total-alerts">0</div>
+        </div>
+
+        <div class="card">
+            <h3>Critical Incidents</h3>
+            <div class="value red" id="critical-alerts">0</div>
+        </div>
+
+        <div class="card">
+            <h3>Unresolved Triage</h3>
+            <div class="value yellow" id="unresolved-alerts">0</div>
+        </div>
+    </div>
+
+    <!-- Interactive Threat Simulation Sandbox -->
+    <div class="simulation-box">
+        <div class="sim-header">
+            <div>
+                <h3>⚡ Real-Time Threat Detection & Simulation Sandbox</h3>
+                <p class="muted" style="margin: 3px 0 0 0; font-size: 13px;">
+                    Inject authentic CIC-IDS2017 packet flows to trigger live ML inference and alert triage.
+                </p>
+            </div>
+            <div class="sim-buttons">
+                <button class="btn btn-danger" onclick="simulateSpecificThreat('DDoS')">🔴 Test DDoS</button>
+                <button class="btn btn-danger" onclick="simulateSpecificThreat('DoS Hulk')">🟠 Test DoS Hulk</button>
+                <button class="btn btn-warning" onclick="simulateSpecificThreat('PortScan')">🟡 Test PortScan</button>
+                <button class="btn btn-secondary" onclick="simulateSpecificThreat('Web Attack - Brute Force')">🟣 Test Web Attack</button>
+                <button class="btn btn-success" onclick="simulateSpecificThreat('BENIGN')">🟢 Test Normal Flow</button>
+                
+                <select id="custom-threat-select" class="select-threat">
+                    <option value="">More Attack Types...</option>
+                </select>
+                <button class="btn btn-primary" onclick="simulateDropdownThreat()">Inject Threat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Investigation Table -->
+    <div class="section">
+        <div class="section-header" style="margin-top: 0;">
+            <h2>Recent Security Incident Alerts</h2>
+            <div style="font-size: 13px; color: #94a3b8;">
+                Real-time incident response feed
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Timestamp</th>
+                    <th>Source IP</th>
+                    <th>Target IP</th>
+                    <th>Threat Classification</th>
+                    <th>Severity</th>
+                    <th>Investigation Status</th>
+                    <th>Analyst Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="alerts-table">
+                <tr>
+                    <td colspan="9" class="muted">Loading security alerts...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<!-- Investigation Modal -->
+<div class="modal-overlay" id="investigate-modal">
+    <div class="modal">
+        <h3>Investigate Security Alert #<span id="modal-alert-id"></span></h3>
+        <div class="form-group">
+            <label>Threat Classification</label>
+            <div id="modal-threat-name" style="font-weight: 600; color: #38bdf8;"></div>
+        </div>
+        <div class="form-group">
+            <label>Source & Target</label>
+            <div class="code" id="modal-ips"></div>
+        </div>
+        <div class="form-group">
+            <label for="modal-status-select">Investigation Status</label>
+            <select id="modal-status-select" class="form-control">
+                <option value="New">New</option>
+                <option value="Investigating">Investigating</option>
+                <option value="Resolved">Resolved</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="modal-severity-select">Severity Override</label>
+            <select id="modal-severity-select" class="form-control">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="modal-notes">Analyst Investigation Notes</label>
+            <textarea id="modal-notes" class="form-control" rows="3" placeholder="Enter findings, IP block status, or remediation actions..."></textarea>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="saveAlertInvestigation()">Save Investigation</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let activeAlertId = null;
+
+    function showToast(message, isAlert = false) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.className = isAlert ? "toast-alert" : "toast-success";
+        toast.style.display = "block";
+        setTimeout(() => { toast.style.display = "none"; }, 6000);
+    }
+
+    async function loadSampleThreats() {
+        try {
+            const res = await fetch("/api/sample-threats");
+            if (!res.ok) return;
+            const threats = await res.json();
+            const select = document.getElementById("custom-threat-select");
+            select.innerHTML = '<option value="">Select Threat Family...</option>';
+            threats.forEach(t => {
+                const opt = document.createElement("option");
+                opt.value = t.name;
+                opt.textContent = `${t.name} (${t.severity})`;
+                select.appendChild(opt);
+            });
+        } catch (e) {
+            console.error("Could not load sample threats:", e);
+        }
+    }
+
+    async function simulateSpecificThreat(threatName) {
+        try {
+            const res = await fetch("/api/simulate-threat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ threat_name: threatName })
+            });
+            const data = await res.json();
+            if (data.success) {
+                if (data.alert_created) {
+                    showToast(`🚨 THREAT DETECTED: [${data.threat_name}] classified with ${(data.prediction.attack_probability * 100).toFixed(1)}% confidence. Alert #${data.alert_id} generated!`, true);
+                } else {
+                    showToast(`✅ BENIGN TRAFFIC: Flow classified as Normal (${(data.prediction.confidence * 100).toFixed(1)}% confidence). No security alert triggered.`, false);
+                }
+                loadDashboard();
+            } else {
+                showToast(`Simulation error: ${data.error}`, true);
+            }
+        } catch (e) {
+            showToast("Failed to communicate with detection engine.", true);
+        }
+    }
+
+    function simulateDropdownThreat() {
+        const val = document.getElementById("custom-threat-select").value;
+        if (!val) {
+            alert("Please select a threat family from the dropdown.");
+            return;
+        }
+        simulateSpecificThreat(val);
+    }
+
+    async function clearAlerts() {
+        if (!confirm("Are you sure you want to clear all recorded alerts?")) return;
+        try {
+            const res = await fetch("/api/clear-alerts", { method: "POST" });
+            const data = await res.json();
+            if (data.success) {
+                showToast("All incident records cleared.", false);
+                loadDashboard();
+            }
+        } catch (e) {
+            alert("Error clearing alerts.");
+        }
+    }
+
+    function openInvestigateModal(alertObj) {
+        activeAlertId = alertObj.id;
+        document.getElementById("modal-alert-id").textContent = alertObj.id;
+        document.getElementById("modal-threat-name").textContent = alertObj.predicted_label;
+        document.getElementById("modal-ips").textContent = `${alertObj.source_ip || '—'} ➔ ${alertObj.destination_ip || '—'}`;
+        document.getElementById("modal-status-select").value = alertObj.status || "New";
+        document.getElementById("modal-severity-select").value = alertObj.severity || "Medium";
+        document.getElementById("modal-notes").value = alertObj.analyst_notes || "";
+        document.getElementById("investigate-modal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("investigate-modal").style.display = "none";
+        activeAlertId = null;
+    }
+
+    async function saveAlertInvestigation() {
+        if (!activeAlertId) return;
+        const status = document.getElementById("modal-status-select").value;
+        const severity = document.getElementById("modal-severity-select").value;
+        const notes = document.getElementById("modal-notes").value;
+
+        try {
+            const res = await fetch(`/api/alerts/${activeAlertId}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    status: status,
+                    severity: severity,
+                    analyst_notes: notes,
+                })
+            });
+            const data = await res.json();
+            if (data.success) {
+                closeModal();
+                showToast(`Alert #${activeAlertId} successfully updated to [${status}].`, false);
+                loadDashboard();
+            } else {
+                alert("Error updating alert: " + (data.error || "Unknown error"));
+            }
+        } catch (e) {
+            alert("Failed to save alert updates.");
+        }
+    }
+
+    function getSeverityBadge(severity) {
+        const s = (severity || "").toLowerCase();
+        if (s === "critical") return '<span class="badge badge-critical">Critical</span>';
+        if (s === "high") return '<span class="badge badge-high">High</span>';
+        if (s === "medium") return '<span class="badge badge-medium">Medium</span>';
+        return '<span class="badge badge-low">Low</span>';
+    }
+
+    function getStatusBadge(status) {
+        const s = (status || "").toLowerCase();
+        if (s === "investigating") return '<span class="badge badge-status-investigating">Investigating</span>';
+        if (s === "resolved") return '<span class="badge badge-status-resolved">Resolved</span>';
+        return '<span class="badge badge-status-new">New</span>';
+    }
+
+    async function loadDashboard() {
+        try {
+            const [statusResponse, statsResponse, alertsResponse] = await Promise.all([
+                fetch("/api/status"),
+                fetch("/api/alert-stats"),
+                fetch("/api/alerts?limit=50")
+            ]);
+
+            if (!statusResponse.ok || !statsResponse.ok || !alertsResponse.ok) {
+                throw new Error("API request failed");
+            }
+
+            const status = await statusResponse.json();
+            const stats = await statsResponse.json();
+            const alerts = await alertsResponse.json();
+
+            document.getElementById("app-status").textContent = status.status;
+            document.getElementById("model-status").textContent = status.model_loaded ? "Active (78 Features)" : "Offline";
+            document.getElementById("total-alerts").textContent = stats.total;
+            document.getElementById("critical-alerts").textContent = stats.critical;
+            document.getElementById("unresolved-alerts").textContent = stats.unresolved;
+            document.getElementById("last-updated").textContent = "Last sync: " + new Date().toLocaleTimeString();
+
+            const tbody = document.getElementById("alerts-table");
+
+            if (alerts.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="muted" style="text-align:center; padding: 24px;">No security incidents recorded. Use the Simulation Sandbox above to inject live attacks.</td></tr>';
+                return;
+            }
+
+            tbody.replaceChildren();
+
+            alerts.forEach(alert => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td class="code">#${alert.id}</td>
+                    <td style="color:#94a3b8; font-size:12px;">${alert.timestamp ? alert.timestamp.substring(0, 19).replace('T', ' ') : '—'}</td>
+                    <td class="code">${alert.source_ip || '—'}</td>
+                    <td class="code">${alert.destination_ip || '—'}</td>
+                    <td style="font-weight: 600; color: #f1f5f9;">${alert.predicted_label}</td>
+                    <td>${getSeverityBadge(alert.severity)}</td>
+                    <td>${getStatusBadge(alert.status)}</td>
+                    <td style="color: #94a3b8; font-size: 12px; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        ${alert.analyst_notes ? alert.analyst_notes : '<span class="muted">None</span>'}
+                    </td>
+                    <td>
+                        <button class="btn btn-outline" style="padding: 4px 10px; font-size: 11.5px;" onclick='openInvestigateModal(${JSON.stringify(alert)})'>
+                            🔎 Investigate
+                        </button>
+                    </td>
+                `;
+
+                tbody.appendChild(row);
+            });
+
+        } catch (error) {
+            document.getElementById("app-status").textContent = "API Error";
+            console.error("Dashboard error:", error);
+        }
+    }
+
+    loadSampleThreats();
+    loadDashboard();
+</script>
+</body>
+</html>

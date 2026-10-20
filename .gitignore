@@ -1,0 +1,36 @@
+
+# # Python
+# __pycache__/
+# *.py[cod]
+# .venv/
+
+# # Dataset files
+# data/raw/*
+# data/processed/*
+# !data/raw/.gitkeep
+# !data/processed/.gitkeep
+
+# # Generated models and database
+# models/*.joblib
+# models/*.pkl
+# data/*.db
+
+# # Reports generated during training
+# reports/*.json
+# reports/*.csv
+
+# # Environment secrets
+# .env
+
+# # Editor files
+# .vscode/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# Large CIC-IDS dataset files
+data/raw/MachineLearningCVE/*.csv
