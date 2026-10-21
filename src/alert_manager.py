@@ -23,7 +23,7 @@ def create_alert(
             f"severity must be one of {sorted(ALLOWED_SEVERITIES)}"
         )
 
-    timestamp = datetime.now(timezone.utc).isoformat()
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     with get_connection() as connection:
         cursor = connection.execute(

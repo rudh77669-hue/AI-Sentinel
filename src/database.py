@@ -86,6 +86,10 @@ def update_alert(alert_id, status=None, severity=None, analyst_notes=None):
 def clear_all_alerts():
     with get_connection() as connection:
         connection.execute("DELETE FROM alerts")
+        try:
+            connection.execute("DELETE FROM sqlite_sequence WHERE name = 'alerts'")
+        except Exception:
+            pass
         connection.commit()
 
 
